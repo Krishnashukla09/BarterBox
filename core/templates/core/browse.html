@@ -1,0 +1,208 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Browse Skills | BarterBox</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      font-family: 'Roboto', sans-serif;
+      color: #fff;
+    }
+
+    nav {
+      background: #0f0c29;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 0 10px #0005;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #a78bfa;
+    }
+
+    .nav-links a {
+      color: #c084fc;
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 2rem;
+    }
+
+    .filters {
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .filters input, .filters select {
+      padding: 0.6rem;
+      border-radius: 8px;
+      border: none;
+      background: #2c2c54;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .filters button {
+      padding: 0.6rem 1.4rem;
+      background: #a78bfa;
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .card {
+      background: #1b1b3a;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 12px #a78bfa33;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #a78bfa;
+    }
+
+    .info {
+      flex: 1;
+    }
+
+    .info h3 {
+      margin-bottom: 0.4rem;
+      color: #a78bfa;
+    }
+
+    .skills {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-bottom: 0.4rem;
+    }
+
+    .skills span {
+      background: #a78bfa33;
+      color: #a78bfa;
+      padding: 0.3rem 0.7rem;
+      margin: 0.2rem;
+      display: inline-block;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    .rating {
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+
+    .card a.button {
+      background: #a78bfa;
+      color: #000;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    .card a.button:hover {
+      background: #c084fc;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">BarterBox</div>
+    <div class="nav-links">
+      <a href="{% url 'dashboard' %}">Dashboard</a>
+      <a href="{% url 'swap_requests' %}">Requests</a>
+      <a href="{% url 'profile' %}">Profile</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <form method="get" class="filters">
+      <input type="text" name="skill" placeholder="Search skill..." value="{{ request.GET.skill }}">
+      <select name="availability">
+        <option value="">All Availability</option>
+        <option value="available">Available</option>
+        <option value="busy">Busy</option>
+      </select>
+      <button type="submit">Search</button>
+    </form>
+
+    {% for profile in users %}
+    <div class="card">
+      {% if profile.profile_picture %}
+        <img src="C:\Users\krish\Downloads\default.jpg" alt="Avatar">
+      {% else %}
+        <img src="C:\Users\krish\Downloads\default.jpg" alt="Avatar">
+      {% endif %}
+
+      <div class="info">
+        <h3>{{ profile.user.username }}</h3>
+        <div class="skills">
+          <strong>Offers:</strong>
+          {% for skill in profile.skills_offered.all %}
+            <span>{{ skill.name }}</span>
+          {% empty %}
+            <span>None</span>
+          {% endfor %}
+        </div>
+        <div class="skills">
+          <strong>Wants:</strong>
+          {% for skill in profile.skills_wanted.all %}
+            <span>{{ skill.name }}</span>
+          {% empty %}
+            <span>None</span>
+          {% endfor %}
+        </div>
+        <div class="rating">Rating: 4.1/5 (mock)</div>
+      </div>
+
+      <a href="{% url 'send_swap_request' profile.user.id %}" class="button">Request Swap</a>
+    </div>
+    {% empty %}
+      <p>No users found.</p>
+    {% endfor %}
+  </div>
+</body>
+</html>

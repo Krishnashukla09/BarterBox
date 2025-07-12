@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Profile | BarterBox</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #f1f1f1;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    nav {
+      background: #0f0c29;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 0 10px #0005;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #a78bfa;
+    }
+
+    .nav-links a {
+      color: #c084fc;
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      margin-top: 3rem;
+      background: #1b1b3a;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #a78bfa44;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #a78bfa;
+    }
+
+    label {
+      display: block;
+      margin: 1rem 0 0.5rem;
+      font-weight: bold;
+    }
+
+    input[type="text"], select, textarea, input[type="file"] {
+      width: 100%;
+      padding: 0.7rem;
+      border: none;
+      border-radius: 8px;
+      background: #292950;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    button {
+      margin-top: 2rem;
+      padding: 0.7rem 2rem;
+      background: #a78bfa;
+      border: none;
+      color: #000;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #c084fc;
+    }
+
+    .profile-pic {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .profile-pic img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid #a78bfa;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 2rem 1rem;
+      }
+
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        margin-top: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">BarterBox</div>
+    <div class="nav-links">
+      <a href="{% url 'dashboard' %}">Dashboard</a>
+      <a href="{% url 'browse_users' %}">Browse</a>
+      <a href="{% url 'swap_requests' %}">Requests</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2>My Profile</h2>
+    <div class="profile-pic">
+      {% if profile.profile_picture %}
+        <img src="{{ profile.profile_picture.url }}" alt="Profile Picture">
+      {% else %}
+        <img src="{% static 'default-avatar.png' %}" alt="Default Avatar">
+      {% endif %}
+    </div>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Save Profile</button>
+    </form>
+  </div>
+</body>
+</html>

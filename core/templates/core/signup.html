@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+{% block title %}Signup - BarterBox{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <h3 class="mb-4">Create Your BarterBox Account</h3>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success">Sign Up</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

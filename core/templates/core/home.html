@@ -1,0 +1,61 @@
+{% extends 'core/base.html' %}
+{% block title %}Home - BarterBox{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="header">
+    <form method="get" class="filters">
+      <select name="availability">
+        <option value="">Availability</option>
+        <option value="available">Available</option>
+        <option value="busy">Busy</option>
+      </select>
+      <input type="text" name="skill" placeholder="Search..." value="{{ request.GET.skill }}">
+      <button class="search-btn">Search</button>
+    </form>
+  </div>
+
+  {% for profile in users %}
+  <div class="profile-card">
+    <div class="profile-photo">
+      {% if profile.profile_picture %}
+        <img src="{{ profile.profile_picture.url }}" style="width:80px; height:80px; border-radius:50%;">
+      {% endif %}
+    </div>
+    <div class="profile-info">
+      <div class="profile-name">{{ profile.user.username }}</div>
+      <div class="skills">
+        Skills Offered:
+        {% for skill in profile.skills_offered.all %}
+          <span>{{ skill.name }}</span>
+        {% empty %}
+          <span>No skills</span>
+        {% endfor %}
+      </div>
+      <div class="skills">
+        Skills Wanted:
+        {% for skill in profile.skills_wanted.all %}
+          <span>{{ skill.name }}</span>
+        {% empty %}
+          <span>No skills</span>
+        {% endfor %}
+      </div>
+      <div class="rating">Rating: 
+        {% with profile.user.feedback_received.all|length as total %}
+          {% if total > 0 %}
+            {{ profile.user.feedback_received.aggregate_avg.rating|default:"-"|floatformat:1 }}/5
+          {% else %}
+            No ratings
+          {% endif %}
+        {% endwith %}
+      </div>
+    </div>
+    <a href="{% url 'send_swap_request' profile.user.id %}" class="request-btn">Request</a>
+  </div>
+  {% empty %}
+  <p>No users found.</p>
+  {% endfor %}
+
+  <!-- Optional: pagination here -->
+</div>
+{% endblock %}

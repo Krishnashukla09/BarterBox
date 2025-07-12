@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BarterBox | Skill Swap Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #a78bfa;
+    }
+
+    nav {
+      background: #0f0c29;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 0 10px #0005;
+    }
+
+    nav .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #a78bfa;
+    }
+
+    nav .nav-links a {
+      color: #c084fc;
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s ease;
+    }
+
+    nav .nav-links a:hover {
+      color: white;
+    }
+
+    .hero-section {
+      height: calc(100vh - 80px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: #ddd;
+      max-width: 700px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-buttons a {
+      display: inline-block;
+      margin: 0.5rem;
+      padding: 0.8rem 1.8rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    .btn-primary {
+      background-color: #a78bfa;
+      color: #000;
+    }
+
+    .btn-primary:hover {
+      background-color: #c084fc;
+    }
+
+    .btn-outline {
+      border: 2px solid #a78bfa;
+      color: #a78bfa;
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      background: #a78bfa22;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav .nav-links {
+        margin-top: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">BarterBox</div>
+    <div class="nav-links">
+      {% if user.is_authenticated %}
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'browse_users' %}">Browse</a>
+        <a href="{% url 'profile' %}">Profile</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'signup' %}">Sign Up</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <section class="hero-section">
+    <h1 class="hero-title">Exchange Skills, Build Connections</h1>
+    <p class="hero-subtitle">
+      Connect with others to share knowledge, learn new skills,<br>
+      and grow together in our vibrant community.
+    </p>
+    <div class="hero-buttons">
+      {% if user.is_authenticated %}
+        <a href="{% url 'dashboard' %}" class="btn-primary">Go to Dashboard</a>
+        <a href="{% url 'browse_users' %}" class="btn-outline">Browse Skills</a>
+      {% else %}
+        <a href="{% url 'signup' %}" class="btn-primary">Get Started</a>
+        <a href="{% url 'login' %}" class="btn-outline">Login</a>
+      {% endif %}
+    </div>
+  </section>
+</body>
+</html>

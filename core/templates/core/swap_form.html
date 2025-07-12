@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% block title %}Send Swap Request{% endblock %}
+
+{% block content %}
+<h3 class="mb-4">Send Swap Request to {{ receiver.username }}</h3>
+
+<form method="post">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <label for="id_offered_skill">Your Offered Skill:</label>
+    {{ form.offered_skill }}
+  </div>
+
+  <div class="mb-3">
+    <label for="id_wanted_skill">Skill You Want:</label>
+    {{ form.wanted_skill }}
+  </div>
+
+  <div class="mb-3">
+    <label for="id_message">Message (optional):</label>
+    {{ form.message }}
+  </div>
+
+  <button type="submit" class="btn btn-success">Send Request</button>
+</form>
+{% endblock %}
