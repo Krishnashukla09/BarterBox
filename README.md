@@ -28,8 +28,7 @@ BarterBox is an intuitive and futuristic platform where users can **offer** and 
 | Name              | Role                      | GitHub                                        |
 |-------------------|---------------------------|-----------------------------------------------|
 | **Krishna Shukla** (Leader) | Full Stack Developer         | [@Krishnashukla09](https://github.com/Krishnashukla09) |
-| vishwa Gupta          | Backend + Models          |                          |
-| Arpita Kushwaha       | Frontend Developer        |                          |
+
 
 > 📌 Feel free to replace names and links with actual team members.
 
