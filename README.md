@@ -30,7 +30,7 @@ BarterBox is an intuitive and futuristic platform where users can **offer** and 
 | **Krishna Shukla** (Leader) | Full Stack Developer         | [@Krishnashukla09](https://github.com/Krishnashukla09) |
 
 
-> 📌 Feel free to replace names and links with actual team members.
+
 
 ---
 
